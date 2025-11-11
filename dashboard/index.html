@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliCourse Dashboard | Business Analytics</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/charts.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">Intelli<span>Course</span></div>
+        <div class="sidebar-menu">
+            <div class="menu-item active" data-page="dashboard">
+                <i>📊</i>
+                <span class="menu-text">Dashboard</span>
+            </div>
+            <div class="menu-item" data-page="revenue">
+                <i>💰</i>
+                <span class="menu-text">Revenue Analytics</span>
+            </div>
+            <div class="menu-item" data-page="students">
+                <i>👥</i>
+                <span class="menu-text">Student Management</span>
+            </div>
+            <div class="menu-item" data-page="courses">
+                <i>📚</i>
+                <span class="menu-text">Course Management</span>
+            </div>
+            <div class="menu-item" data-page="ai-agents">
+                <i>🤖</i>
+                <span class="menu-text">AI Agents</span>
+            </div>
+            <div class="menu-item" data-page="marketing">
+                <i>📈</i>
+                <span class="menu-text">Marketing Analytics</span>
+            </div>
+            <div class="menu-item" data-page="payouts">
+                <i>💸</i>
+                <span class="menu-text">Payouts & Funds</span>
+            </div>
+            <div class="menu-item" data-page="security">
+                <i>🔒</i>
+                <span class="menu-text">Security</span>
+            </div>
+            <div class="menu-item" data-page="settings">
+                <i>⚙️</i>
+                <span class="menu-text">Settings</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Business Dashboard</h1>
+            <div class="user-info">
+                <div class="user-avatar">O</div>
+                <div>
+                    <div>Owner</div>
+                    <div style="font-size: 0.8rem; color: #6c757d;">Admin</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page active">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>TOTAL REVENUE</h3>
+                        <div class="stat-value">R 248,750</div>
+                        <div class="stat-change positive">↑ 12.5% this week</div>
+                    </div>
+                    <div class="stat-icon revenue-icon">💰</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>ACTIVE STUDENTS</h3>
+                        <div class="stat-value">1,842</div>
+                        <div class="stat-change positive">↑ 8.2% this week</div>
+                    </div>
+                    <div class="stat-icon students-icon">👥</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>COURSES SOLD</h3>
+                        <div class="stat-value">2,156</div>
+                        <div class="stat-change positive">↑ 5.7% this week</div>
+                    </div>
+                    <div class="stat-icon courses-icon">📚</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>MONTHLY TARGET</h3>
+                        <div class="stat-value">R 1,000,000</div>
+                        <div class="stat-change positive">24.9% achieved</div>
+                    </div>
+                    <div class="stat-icon target-icon">🎯</div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>Revenue Growth</h2>
+                        <select id="revenue-period">
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h2>Payment Methods</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="paymentMethodsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payout Section -->
+            <div class="payout-section">
+                <div class="payout-header">
+                    <h2>Weekly Payout Distribution</h2>
+                    <div>Total: R 62,187.50</div>
+                </div>
+                <div class="payout-grid">
+                    <div class="payout-item payout-fnb">
+                        <h3>FNB ACCOUNT (40%)</h3>
+                        <div class="payout-amount">R 24,875</div>
+                    </div>
+                    <div class="payout-item payout-african-bank">
+                        <h3>AFRICAN BANK (10%)</h3>
+                        <div class="payout-amount">R 6,218.75</div>
+                    </div>
+                    <div class="payout-item payout-reserve">
+                        <h3>RESERVE FUND (20%)</h3>
+                        <div class="payout-amount">R 12,437.50</div>
+                    </div>
+                    <div class="payout-item payout-ai-fund">
+                        <h3>AI FUND (20%)</h3>
+                        <div class="payout-amount">R 12,437.50</div>
+                    </div>
+                    <div class="payout-item payout-accumulation">
+                        <h3>ACCUMULATION (10%)</h3>
+                        <div class="payout-amount">R 6,218.75</div>
+                        <div style="font-size: 0.8rem; color: #6c757d;">Not paid out, grows weekly</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Agents Section -->
+            <div class="ai-agents-section">
+                <div class="ai-agents-header">
+                    <h2>AI Agent Performance</h2>
+                    <button id="deployAgent" class="cta-button">Deploy New Agent</button>
+                </div>
+                <div class="agents-grid" id="agentsGrid">
+                    <!-- AI agents will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Tax Reminder -->
+            <div class="tax-reminder">
+                <h3>SARS Tax Reminder</h3>
+                <p>Your current revenue is below the tax threshold. No tax payment is required at this time. We'll notify you when you approach taxable income levels.</p>
+            </div>
+        </div>
+
+        <!-- Other pages would be implemented similarly -->
+        <div id="revenue-page" class="page">
+            <h2>Revenue Analytics</h2>
+            <!-- Revenue-specific content -->
+        </div>
+
+        <div id="students-page" class="page">
+            <h2>Student Management</h2>
+            <!-- Students-specific content -->
+        </div>
+
+        <!-- Add other pages as needed -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/analytics.js"></script>
+    <script src="scripts/ai-agents.js"></script>
+</body>
+</html>
