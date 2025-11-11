@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliCourse Dashboard | Business Analytics</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f94144;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: var(--dark);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            padding: 1.5rem 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-bottom: 1px solid #495057;
+        }
+        
+        .logo span {
+            color: var(--success);
+        }
+        
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+        
+        .menu-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background: #495057;
+        }
+        
+        .menu-item i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 1.5rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            color: var(--secondary);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .stat-info h3 {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .stat-change {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .positive {
+            color: #2ecc71;
+        }
+        
+        .negative {
+            color: var(--danger);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        
+        .revenue-icon {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+        
+        .students-icon {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+        
+        .courses-icon {
+            background: rgba(114, 9, 183, 0.1);
+            color: var(--accent);
+        }
+        
+        .target-icon {
+            background: rgba(248, 150, 30, 0.1);
+            color: var(--warning);
+        }
+        
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-header h2 {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        /* Payout Section */
+        .payout-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .payout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .payout-header h2 {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .payout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .payout-item {
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .payout-item h3 {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .payout-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .payout-fnb {
+            border-left: 4px solid var(--primary);
+        }
+        
+        .payout-african-bank {
+            border-left: 4px solid var(--success);
+        }
+        
+        .payout-reserve {
+            border-left: 4px solid var(--warning);
+        }
+        
+        .payout-ai-fund {
+            border-left: 4px solid var(--accent);
+        }
+        
+        .payout-accumulation {
+            border-left: 4px solid #2ecc71;
+        }
+        
+        /* AI Agents Section */
+        .ai-agents-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .ai-agents-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ai-agents-header h2 {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .agent-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .agent-title {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .agent-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+        }
+        
+        .agent-progress {
+            margin-top: 1rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        /* Tax Reminder */
+        .tax-reminder {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .tax-reminder h3 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tax-reminder h3:before {
+            content: '💡';
+            margin-right: 0.5rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar .menu-text {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">Intelli<span>Course</span></div>
+        <div class="sidebar-menu">
+            <div class="menu-item active">
+                <i>📊</i>
+                <span class="menu-text">Dashboard</span>
+            </div>
+            <div class="menu-item">
+                <i>💰</i>
+                <span class="menu-text">Revenue Analytics</span>
+            </div>
+            <div class="menu-item">
+                <i>👥</i>
+                <span class="menu-text">Student Management</span>
+            </div>
+            <div class="menu-item">
+                <i>📚</i>
+                <span class="menu-text">Course Management</span>
+            </div>
+            <div class="menu-item">
+                <i>🤖</i>
+                <span class="menu-text">AI Agents</span>
+            </div>
+            <div class="menu-item">
+                <i>📈</i>
+                <span class="menu-text">Marketing Analytics</span>
+            </div>
+            <div class="menu-item">
+                <i>💸</i>
+                <span class="menu-text">Payouts & Funds</span>
+            </div>
+            <div class="menu-item">
+                <i>🔒</i>
+                <span class="menu-text">Security</span>
+            </div>
+            <div class="menu-item">
+                <i>⚙️</i>
+                <span class="menu-text">Settings</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Business Dashboard</h1>
+            <div class="user-info">
+                <div class="user-avatar">O</div>
+                <div>
+                    <div>Owner</div>
+                    <div style="font-size: 0.8rem; color: #6c757d;">Admin</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>TOTAL REVENUE</h3>
+                    <div class="stat-value">R 248,750</div>
+                    <div class="stat-change positive">↑ 12.5% this week</div>
+                </div>
+                <div class="stat-icon revenue-icon">💰</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>ACTIVE STUDENTS</h3>
+                    <div class="stat-value">1,842</div>
+                    <div class="stat-change positive">↑ 8.2% this week</div>
+                </div>
+                <div class="stat-icon students-icon">👥</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>COURSES SOLD</h3>
+                    <div class="stat-value">2,156</div>
+                    <div class="stat-change positive">↑ 5.7% this week</div>
+                </div>
+                <div class="stat-icon courses-icon">📚</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>MONTHLY TARGET</h3>
+                    <div class="stat-value">R 1,000,000</div>
+                    <div class="stat-change positive">24.9% achieved</div>
+                </div>
+                <div class="stat-icon target-icon">🎯</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2>Revenue Growth</h2>
+                    <select>
+                        <option>Last 7 days</option>
+                        <option>Last 30 days</option>
+                        <option>Last 90 days</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <!-- Revenue chart would be rendered here with a library like Chart.js -->
+                    <div style="display: flex; align-items: flex-end; height: 100%; padding: 1rem 0;">
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <div style="background: var(--primary); width: 80%; height: 80%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem;">Mon</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <div style="background: var(--primary); width: 80%; height: 65%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem;">Tue</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <div style="background: var(--primary); width: 80%; height: 90%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem;">Wed</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <div style="background: var(--primary); width: 80%; height: 75%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem;">Thu</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <div style="background: var(--primary); width: 80%; height: 95%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem;">Fri</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <div style="background: var(--primary); width: 80%; height: 70%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem;">Sat</div>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <div style="background: var(--primary); width: 80%; height: 85%; border-radius: 4px 4px 0 0;"></div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem;">Sun</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2>Payment Methods</h2>
+                </div>
+                <div class="chart-container">
+                    <!-- Pie chart would be rendered here -->
+                    <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="width: 12px; height: 12px; background: var(--primary); border-radius: 50%; margin-right: 0.5rem;"></div>
+                            <div style="flex: 1;">South African EFT (42%)</div>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; margin-right: 0.5rem;"></div>
+                            <div style="flex: 1;">PayFast (28%)</div>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="width: 12px; height: 12px; background: var(--accent); border-radius: 50%; margin-right: 0.5rem;"></div>
+                            <div style="flex: 1;">Crypto (15%)</div>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <div style="width: 12px; height: 12px; background: var(--warning); border-radius: 50%; margin-right: 0.5rem;"></div>
+                            <div style="flex: 1;">Stripe (10%)</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: #6c757d; border-radius: 50%; margin-right: 0.5rem;"></div>
+                            <div style="flex: 1;">Other (5%)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payout Section -->
+        <div class="payout-section">
+            <div class="payout-header">
+                <h2>Weekly Payout Distribution</h2>
+                <div>Total: R 62,187.50</div>
+            </div>
+            <div class="payout-grid">
+                <div class="payout-item payout-fnb">
+                    <h3>FNB ACCOUNT (40%)</h3>
+                    <div class="payout-amount">R 24,875</div>
+                </div>
+                <div class="payout-item payout-african-bank">
+                    <h3>AFRICAN BANK (10%)</h3>
+                    <div class="payout-amount">R 6,218.75</div>
+                </div>
+                <div class="payout-item payout-reserve">
+                    <h3>RESERVE FUND (20%)</h3>
+                    <div class="payout-amount">R 12,437.50</div>
+                </div>
+                <div class="payout-item payout-ai-fund">
+                    <h3>AI FUND (20%)</h3>
+                    <div class="payout-amount">R 12,437.50</div>
+                </div>
+                <div class="payout-item payout-accumulation">
+                    <h3>ACCUMULATION (10%)</h3>
+                    <div class="payout-amount">R 6,218.75</div>
+                    <div style="font-size: 0.8rem; color: #6c757d;">Not paid out, grows weekly</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Agents Section -->
+        <div class="ai-agents-section">
+            <div class="ai-agents-header">
+                <h2>AI Agent Performance</h2>
+                <button style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                    Deploy New Agent
+                </button>
+            </div>
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-title">Student Acquisition Agent</div>
+                        <div class="agent-status status-active">ACTIVE</div>
+                    </div>
+                    <div>Goal: Acquire 2,000 paying students in 7 days</div>
+                    <div class="agent-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>1,300 students acquired</span>
+                            <span>65%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-title">Content Creation Agent</div>
+                        <div class="agent-status status-active">ACTIVE</div>
+                    </div>
+                    <div>Goal: Create marketing materials and course content</div>
+                    <div class="agent-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 82%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>47/57 tasks completed</span>
+                            <span>82%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-title">Social Media Auto-Poster</div>
+                        <div class="agent-status status-active">ACTIVE</div>
+                    </div>
+                    <div>Goal: Post content to TikTok, Facebook, Instagram</div>
+                    <div class="agent-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>27/60 posts scheduled</span>
+                            <span>45%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tax Reminder -->
+        <div class="tax-reminder">
+            <h3>SARS Tax Reminder</h3>
+            <p>Your current revenue is below the tax threshold. No tax payment is required at this time. We'll notify you when you approach taxable income levels.</p>
+        </div>
+    </div>
+
+    <script>
+        // Dashboard functionality
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Simulate real-time data updates
+        function updateDashboardData() {
+            // In a real implementation, this would fetch data from an API
+            console.log('Dashboard data updated');
+            
+            // Update student count with random growth
+            const studentElement = document.querySelector('.stat-card:nth-child(2) .stat-value');
+            const currentStudents = parseInt(studentElement.textContent.replace(/\D/g, ''));
+            const newStudents = currentStudents + Math.floor(Math.random() * 10);
+            studentElement.textContent = newStudents.toLocaleString();
+            
+            // Update revenue with random growth
+            const revenueElement = document.querySelector('.stat-card:nth-child(1) .stat-value');
+            const currentRevenue = parseInt(revenueElement.textContent.replace(/\D/g, ''));
+            const newRevenue = currentRevenue + Math.floor(Math.random() * 1000);
+            revenueElement.textContent = 'R ' + newRevenue.toLocaleString();
+        }
+        
+        // Initialize and set up periodic updates
+        setInterval(updateDashboardData, 30000); // Update every 30 seconds
+    </script>
+</body>
+</html>
