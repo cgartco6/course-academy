@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliCourse Academy | AI-Powered Learning</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--success);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--success);
+        }
+        
+        .auth-buttons button {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .auth-buttons button:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(58, 12, 163, 0.9)), url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .cta-button:hover {
+            background: #5a08a0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Courses Section */
+        .courses-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .course-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+        }
+        
+        .course-category {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .course-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-description {
+            color: #6c757d;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .course-price span {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+        
+        .enroll-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .enroll-button:hover {
+            background: #5a08a0;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .chatbot-button {
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .chatbot-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chatbot-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        
+        .bot-message {
+            background: #f1f3f9;
+            align-self: flex-start;
+        }
+        
+        .user-message {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .chatbot-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+        }
+        
+        .chatbot-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .payment-method {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--success);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+        }
+        
+        /* Currency Notice */
+        .currency-notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .chatbot-window {
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">Intelli<span>Course</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn">Login</button>
+                <button id="signupBtn">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AI-Powered Courses for Rapid Skill Mastery</h1>
+            <p>Learn cutting-edge topics with our AI-curated content that adapts to your learning style. Instant access, addictive formats, and professional quality.</p>
+            <button class="cta-button">Explore Trending Courses</button>
+        </div>
+    </section>
+
+    <!-- Currency Notice -->
+    <div class="container">
+        <div class="currency-notice">
+            <strong>Note:</strong> All prices are linked to daily exchange rates and may fluctuate. We accept multiple payment methods including ZAR, USD, and cryptocurrencies.
+        </div>
+    </div>
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Trending AI-Powered Courses</h2>
+                <p>Handpicked by our AI algorithms based on market demand and learning effectiveness</p>
+            </div>
+            
+            <div class="courses-grid">
+                <!-- Course 1 -->
+                <div class="course-card">
+                    <div class="course-image" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="course-content">
+                        <span class="course-category">AI Agents</span>
+                        <h3 class="course-title">Strategic Intelligence & Deep Agents</h3>
+                        <p class="course-description">Master the art of creating AI systems that can strategize, plan, and execute complex tasks autonomously.</p>
+                        <div class="course-meta">
+                            <div class="course-price">R 499 <span>R 799</span></div>
+                            <button class="enroll-button">Enroll Now</button>
+                        </div>
+                        <div class="payment-methods">
+                            <span class="payment-method">EFT</span>
+                            <span class="payment-method">PayFast</span>
+                            <span class="payment-method">Crypto</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course 2 -->
+                <div class="course-card">
+                    <div class="course-image" style="background-image: url('https://images.unsplash.com/photo-1677442135339-6b5f64b059a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="course-content">
+                        <span class="course-category">Synthetic Intelligence</span>
+                        <h3 class="course-title">Creating AI Helpers for Complex Tasks</h3>
+                        <p class="course-description">Build AI assistants that can handle multi-step processes and decision-making in real-world scenarios.</p>
+                        <div class="course-meta">
+                            <div class="course-price">R 599 <span>R 899</span></div>
+                            <button class="enroll-button">Enroll Now</button>
+                        </div>
+                        <div class="payment-methods">
+                            <span class="payment-method">FNB</span>
+                            <span class="payment-method">PayShap</span>
+                            <span class="payment-method">Stripe</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course 3 -->
+                <div class="course-card">
+                    <div class="course-image" style="background-image: url('https://images.unsplash.com/photo-1677442136015-d896a89a9d4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="course-content">
+                        <span class="course-category">Content Creation</span>
+                        <h3 class="course-title">AI-Powered Marketing Materials</h3>
+                        <p class="course-description">Learn to create viral content, reels, and marketing assets using AI tools and automation systems.</p>
+                        <div class="course-meta">
+                            <div class="course-price">R 449 <span>R 699</span></div>
+                            <button class="enroll-button">Enroll Now</button>
+                        </div>
+                        <div class="payment-methods">
+                            <span class="payment-method">Namibia EFT</span>
+                            <span class="payment-method">Botswana</span>
+                            <span class="payment-method">USDT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Our AI-Powered Platform Stands Out</h2>
+                <p>Traditional courses can't compete with our adaptive, engaging learning system</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI-Curated Content</h3>
+                    <p>Every course is optimized by our AI for maximum retention and engagement</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Access</h3>
+                    <p>Download immediately after payment - no waiting periods</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Addictive Format</h3>
+                    <p>Gamified learning that keeps you coming back for more</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Military Security</h3>
+                    <p>Your data and payments are protected with enterprise-grade security</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Payments</h3>
+                    <p>Pay with local methods or crypto - we support it all</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Support</h3>
+                    <p>Bronwyn, our AI assistant, is available 24/7 to help you</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="courses-section" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions about our platform</p>
+            </div>
+            
+            <div class="courses-grid" style="grid-template-columns: 1fr;">
+                <div class="course-card">
+                    <div class="course-content">
+                        <h3 class="course-title">How are your courses different from Udemy?</h3>
+                        <p class="course-description">Our courses are AI-curated for maximum retention, focus on cutting-edge topics like strategic intelligence and AI agents, and use addictive learning formats that traditional platforms don't offer.</p>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-content">
+                        <h3 class="course-title">What payment methods do you accept?</h3>
+                        <p class="course-description">We accept South African EFT, FNB accounts, PayFast, PayShap, international payments via Stripe, and cryptocurrencies including Bitcoin, Ethereum, and USDT.</p>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-content">
+                        <h3 class="course-title">How does the currency conversion work?</h3>
+                        <p class="course-description">All prices are linked to daily exchange rates. Our system automatically updates prices based on current market rates, which may cause slight fluctuations day to day.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>IntelliCourse</h3>
+                    <p>The future of AI-powered education is here. Learn faster, retain more, and master cutting-edge skills.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#courses">All Courses</a></li>
+                        <li><a href="#features">Platform Features</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#refunds">Refund Policy</a></li>
+                        <li><a href="#compliance">Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#contact">Contact Support</a></li>
+                        <li><a href="#chat">Live Chat</a></li>
+                        <li><a href="#status">System Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 IntelliCourse Academy. All rights reserved. | AI-Powered Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-button" id="chatbotToggle">
+            <span>🤖</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3>Bronwyn - AI Assistant</h3>
+                <span id="closeChatbot">×</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    Hello! I'm Bronwyn, your AI learning assistant. How can I help you today?
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Ask me anything...">
+                <button id="sendMessage">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chatbot functionality
+        document.getElementById('chatbotToggle').addEventListener('click', function() {
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            chatbotWindow.style.display = chatbotWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        document.getElementById('closeChatbot').addEventListener('click', function() {
+            document.getElementById('chatbotWindow').style.display = 'none';
+        });
+        
+        document.getElementById('sendMessage').addEventListener('click', sendMessage);
+        document.getElementById('chatbotInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const input = document.getElementById('chatbotInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Add user message
+                const messagesContainer = document.getElementById('chatbotMessages');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user-message';
+                userMessage.textContent = message;
+                messagesContainer.appendChild(userMessage);
+                
+                // Clear input
+                input.value = '';
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Simulate AI response (in a real implementation, this would call an API)
+                setTimeout(function() {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot-message';
+                    
+                    // Simple response logic based on keywords
+                    if (message.toLowerCase().includes('course') || message.toLowerCase().includes('learn')) {
+                        botMessage.textContent = "We have various AI-powered courses on strategic intelligence, deep agents, and synthetic intelligence. Which topic interests you most?";
+                    } else if (message.toLowerCase().includes('payment') || message.toLowerCase().includes('pay')) {
+                        botMessage.textContent = "We accept multiple payment methods including South African EFT, FNB, PayFast, PayShap, Stripe for international, and cryptocurrencies like Bitcoin and Ethereum.";
+                    } else if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
+                        botMessage.textContent = "Course prices range from R449 to R899. All prices are linked to daily exchange rates and may fluctuate slightly. Would you like to see our current offers?";
+                    } else {
+                        botMessage.textContent = "I'm here to help with any questions about our courses, payments, or platform features. What would you like to know more about?";
+                    }
+                    
+                    messagesContainer.appendChild(botMessage);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        // Enrollment buttons
+        document.querySelectorAll('.enroll-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const courseTitle = this.closest('.course-card').querySelector('.course-title').textContent;
+                alert(`Redirecting to payment for: ${courseTitle}\n\nYou'll be able to choose from multiple payment options including EFT, bank transfer, and cryptocurrency.`);
+            });
+        });
+        
+        // Auth buttons
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            alert('Login functionality would be implemented here with secure authentication.');
+        });
+        
+        document.getElementById('signupBtn').addEventListener('click', function() {
+            alert('Sign up form would appear here with email verification and account creation.');
+        });
+        
+        // Currency converter simulation
+        function updateCurrencyRates() {
+            // In a real implementation, this would fetch live exchange rates
+            console.log('Currency rates updated based on current exchange rates');
+        }
+        
+        // Initialize
+        updateCurrencyRates();
+        setInterval(updateCurrencyRates, 3600000); // Update every hour
+    </script>
+</body>
+</html>
