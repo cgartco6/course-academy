@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliCourse Academy | AI-Powered Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f94144;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--success);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--success);
+        }
+        
+        nav ul li a.active {
+            color: var(--success);
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--success);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .auth-buttons button {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .auth-buttons button:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Floating Dashboard Button */
+        .floating-dashboard {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 99;
+        }
+        
+        .dashboard-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+        
+        .dashboard-btn:hover {
+            transform: scale(1.1);
+            background: #5a08a0;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(58, 12, 163, 0.9)), url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .cta-button:hover {
+            background: #5a08a0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Currency Notice */
+        .currency-notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        
+        /* Courses Section */
+        .courses-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .course-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+        }
+        
+        .course-category {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .course-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-description {
+            color: #6c757d;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .course-price span {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+        
+        .add-to-cart {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .add-to-cart:hover {
+            background: #5a08a0;
+        }
+        
+        .add-to-cart.added {
+            background: var(--success);
+        }
+        
+        /* Shopping Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-sidebar.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        
+        .cart-header h2 {
+            color: var(--secondary);
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            gap: 1rem;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-item-price {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background: #3a56d4;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        /* Self-healing Status */
+        .self-healing-status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #28a745;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .chatbot-button {
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .chatbot-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .chatbot-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chatbot-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chatbot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        
+        .bot-message {
+            background: #f1f3f9;
+            align-self: flex-start;
+        }
+        
+        .user-message {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .chatbot-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+        }
+        
+        .chatbot-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .payment-method {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+        
+        /* Currency Selector */
+        .currency-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .currency-selector select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* AI Agents Status */
+        .ai-agents-status {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin: 2rem 0;
+        }
+        
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .agent-card {
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .agent-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .agent-status {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .status-active {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--success);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+        }
+        
+        /* Overlay for cart and mobile menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .cart-sidebar {
+                width: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                position: relative;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                padding: 1rem;
+                display: none;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .floating-dashboard {
+                bottom: 80px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chatbot-window {
+                width: 300px;
+                right: -50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">Intelli<span>Course</span></div>
+            
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="#courses" class="active">Courses</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#ai-agents">AI Agents</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                
+                <div class="auth-buttons">
+                    <button id="loginBtn">Login</button>
+                    <button id="signupBtn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating Dashboard Button -->
+    <div class="floating-dashboard">
+        <button class="dashboard-btn" id="dashboardBtn">
+            <i class="fas fa-tachometer-alt"></i>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>AI-Powered Courses for Rapid Skill Mastery</h1>
+            <p>Learn cutting-edge topics with our AI-curated content that adapts to your learning style. Instant access, addictive formats, and professional quality.</p>
+            <button class="cta-button" id="exploreCourses">Explore Trending Courses</button>
+        </div>
+    </section>
+
+    <!-- Currency Notice -->
+    <div class="container">
+        <div class="currency-notice">
+            <strong>Live Exchange Rates:</strong> 
+            <span id="exchangeRates">Loading rates...</span>
+            - Prices update in real-time
+        </div>
+    </div>
+
+    <!-- Self-healing System Status -->
+    <div class="container">
+        <div class="self-healing-status">
+            <div class="status-indicator"></div>
+            <div>
+                <strong>Self-Healing System Active</strong>
+                <div>All systems operational. AI monitoring in real-time.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Trending AI-Powered Courses</h2>
+                <p>Handpicked by our AI algorithms based on market demand and learning effectiveness</p>
+            </div>
+            
+            <div class="currency-selector">
+                <label for="currencySelect">Select Currency:</label>
+                <select id="currencySelect">
+                    <option value="ZAR">ZAR (South African Rand)</option>
+                    <option value="USD">USD (US Dollar)</option>
+                    <option value="EUR">EUR (Euro)</option>
+                    <option value="GBP">GBP (British Pound)</option>
+                    <option value="BTC">BTC (Bitcoin)</option>
+                    <option value="ETH">ETH (Ethereum)</option>
+                </select>
+            </div>
+            
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Courses will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Agents Status -->
+    <section id="ai-agents" class="courses-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>AI Agents & Synthetic Intelligence</h2>
+                <p>Our self-evolving AI system creates strategic intelligence and deep agents</p>
+            </div>
+            
+            <div class="ai-agents-status">
+                <h3>Active AI Agents</h3>
+                <div class="agents-grid" id="agentsGrid">
+                    <!-- AI Agents will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Our AI-Powered Platform Stands Out</h2>
+                <p>Traditional courses can't compete with our adaptive, engaging learning system</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI-Curated Content</h3>
+                    <p>Every course is optimized by our AI for maximum retention and engagement</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Access</h3>
+                    <p>Download immediately after payment - no waiting periods</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Addictive Format</h3>
+                    <p>Gamified learning that keeps you coming back for more</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Military Security</h3>
+                    <p>Your data and payments are protected with enterprise-grade security</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Payments</h3>
+                    <p>Pay with local methods or crypto - we support it all</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Support</h3>
+                    <p>Bronwyn, our AI assistant, is available 24/7 to help you</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Self-Healing System</h3>
+                    <p>Automatically detects and fixes issues in real-time</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Strategic Intelligence</h3>
+                    <p>AI agents that create and execute business strategies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions about our platform</p>
+            </div>
+            
+            <div class="faq-container" id="faqContainer">
+                <!-- FAQ items will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>IntelliCourse</h3>
+                    <p>The future of AI-powered education is here. Learn faster, retain more, and master cutting-edge skills.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#courses">All Courses</a></li>
+                        <li><a href="#features">Platform Features</a></li>
+                        <li><a href="#ai-agents">AI Agents</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#refunds">Refund Policy</a></li>
+                        <li><a href="#compliance">Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#contact">Contact Support</a></li>
+                        <li><a href="#chat">Live Chat</a></li>
+                        <li><a href="#status">System Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 IntelliCourse Academy. All rights reserved. | AI-Powered Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Shopping Cart</h2>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">R 0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-button" id="chatbotToggle">
+            <span>🤖</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3>Bronwyn - AI Assistant</h3>
+                <span id="closeChatbot">×</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    Hello! I'm Bronwyn, your AI learning assistant. How can I help you today?
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Ask me anything...">
+                <button id="sendMessage">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced IntelliCourse Application with Shopping Cart, Real Exchange Rates, and Self-Healing System
+        class IntelliCourseApp {
+            constructor() {
+                this.courses = [];
+                this.cart = [];
+                this.exchangeRates = {};
+                this.currentCurrency = 'ZAR';
+                this.aiAgents = [];
+                this.selfHealingActive = true;
+                this.init();
+            }
+
+            async init() {
+                await this.loadCourses();
+                await this.loadExchangeRates();
+                await this.loadAIAgents();
+                this.setupEventListeners();
+                this.renderCourses();
+                this.renderAIAgents();
+                this.setupFAQ();
+                this.startSelfHealingSystem();
+                this.updateCartUI();
+                
+                // Check for user session
+                this.checkUserSession();
+            }
+
+            async loadCourses() {
+                try {
+                    // In production, this would fetch from your API
+                    this.courses = [
+                        {
+                            id: 1,
+                            title: "Strategic Intelligence & Deep Agents",
+                            description: "Master the art of creating AI systems that can strategize, plan, and execute complex tasks autonomously.",
+                            price: 499,
+                            originalPrice: 799,
+                            category: "AI Agents",
+                            imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                            trending: true
+                        },
+                        {
+                            id: 2,
+                            title: "Creating AI Helpers for Complex Tasks",
+                            description: "Build AI assistants that can handle multi-step processes and decision-making in real-world scenarios.",
+                            price: 599,
+                            originalPrice: 899,
+                            category: "Synthetic Intelligence",
+                            imageUrl: "https://images.unsplash.com/photo-1677442135339-6b5f64b059a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                            trending: true
+                        },
+                        {
+                            id: 3,
+                            title: "AI-Powered Marketing Materials",
+                            description: "Learn to create viral content, reels, and marketing assets using AI tools and automation systems.",
+                            price: 449,
+                            originalPrice: 699,
+                            category: "Content Creation",
+                            imageUrl: "https://images.unsplash.com/photo-1677442136015-d896a89a9d4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                            trending: true
+                        },
+                        {
+                            id: 4,
+                            title: "Deep Learning & Neural Networks",
+                            description: "Advanced course on building and training deep neural networks for complex problem solving.",
+                            price: 699,
+                            originalPrice: 999,
+                            category: "AI Development",
+                            imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                            trending: false
+                        },
+                        {
+                            id: 5,
+                            title: "Natural Language Processing",
+                            description: "Learn to process and understand human language using state-of-the-art AI models.",
+                            price: 549,
+                            originalPrice: 799,
+                            category: "AI Development",
+                            imageUrl: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                            trending: false
+                        },
+                        {
+                            id: 6,
+                            title: "Computer Vision & Image Recognition",
+                            description: "Master computer vision techniques for image classification, object detection, and more.",
+                            price: 649,
+                            originalPrice: 899,
+                            category: "AI Development",
+                            imageUrl: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+                            trending: true
+                        }
+                    ];
+                } catch (error) {
+                    console.error('Failed to load courses:', error);
+                    this.renderError('Failed to load courses. Please try again later.');
+                }
+            }
+
+            async loadExchangeRates() {
+                try {
+                    // Fetch real exchange rates from API
+                    const response = await fetch('https://api.exchangerate.host/latest?base=ZAR');
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.exchangeRates = data.rates;
+                        
+                        // Fetch cryptocurrency rates
+                        const cryptoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether&vs_currencies=zar');
+                        const cryptoData = await cryptoResponse.json();
+                        
+                        // Add crypto rates to exchange rates
+                        if (cryptoData.bitcoin) {
+                            this.exchangeRates.BTC = 1 / cryptoData.bitcoin.zar;
+                        }
+                        if (cryptoData.ethereum) {
+                            this.exchangeRates.ETH = 1 / cryptoData.ethereum.zar;
+                        }
+                        if (cryptoData.tether) {
+                            this.exchangeRates.USDT = 1 / cryptoData.tether.zar;
+                        }
+                        
+                        this.updateExchangeRateDisplay();
+                    } else {
+                        throw new Error('Failed to fetch exchange rates');
+                    }
+                } catch (error) {
+                    console.error('Failed to load exchange rates:', error);
+                    // Fallback rates
+                    this.exchangeRates = {
+                        USD: 0.054,
+                        EUR: 0.050,
+                        GBP: 0.043,
+                        BTC: 0.0000029,
+                        ETH: 0.000040,
+                        USDT: 0.054
+                    };
+                    this.updateExchangeRateDisplay();
+                }
+            }
+
+            async loadAIAgents() {
+                try {
+                    // In production, this would fetch from your API
+                    this.aiAgents = [
+                        {
+                            id: 1,
+                            name: "Student Acquisition Agent",
+                            status: "active",
+                            description: "Acquires new students through AI-driven marketing campaigns"
+                        },
+                        {
+                            id: 2,
+                            name: "Content Creation Agent",
+                            status: "active",
+                            description: "Generates course content and marketing materials"
+                        },
+                        {
+                            id: 3,
+                            name: "Social Media Poster",
+                            status: "active",
+                            description: "Automatically posts content to social platforms"
+                        },
+                        {
+                            id: 4,
+                            name: "Strategic Intelligence Engine",
+                            status: "active",
+                            description: "Creates business strategies and optimizes operations"
+                        },
+                        {
+                            id: 5,
+                            name: "Deep Learning Analyzer",
+                            status: "active",
+                            description: "Analyzes user behavior and optimizes learning paths"
+                        },
+                        {
+                            id: 6,
+                            name: "Self-Healing System",
+                            status: "active",
+                            description: "Automatically detects and fixes system issues"
+                        }
+                    ];
+                } catch (error) {
+                    console.error('Failed to load AI agents:', error);
+                }
+            }
+
+            updateExchangeRateDisplay() {
+                const ratesElement = document.getElementById('exchangeRates');
+                if (ratesElement) {
+                    ratesElement.innerHTML = `
+                        USD: ${this.exchangeRates.USD ? (1/this.exchangeRates.USD).toFixed(2) : 'N/A'} |
+                        EUR: ${this.exchangeRates.EUR ? (1/this.exchangeRates.EUR).toFixed(2) : 'N/A'} |
+                        BTC: ${this.exchangeRates.BTC ? (1/this.exchangeRates.BTC).toFixed(0) : 'N/A'} |
+                        ETH: ${this.exchangeRates.ETH ? (1/this.exchangeRates.ETH).toFixed(0) : 'N/A'}
+                    `;
+                }
+            }
+
+            renderCourses() {
+                const grid = document.getElementById('coursesGrid');
+                if (!grid) return;
+
+                grid.innerHTML = this.courses.map(course => `
+                    <div class="course-card" data-course-id="${course.id}">
+                        <div class="course-image" style="background-image: url('${course.imageUrl}')"></div>
+                        <div class="course-content">
+                            <span class="course-category">${course.category}</span>
+                            <h3 class="course-title">${course.title}</h3>
+                            <p class="course-description">${course.description}</p>
+                            <div class="course-meta">
+                                <div class="course-price">
+                                    ${this.formatPrice(course.price, this.currentCurrency)}
+                                    ${course.originalPrice ? `<span>${this.formatPrice(course.originalPrice, this.currentCurrency)}</span>` : ''}
+                                </div>
+                                <button class="add-to-cart" data-course-id="${course.id}">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add event listeners to add to cart buttons
+                document.querySelectorAll('.add-to-cart').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const courseId = parseInt(e.target.closest('button').dataset.courseId);
+                        this.addToCart(courseId);
+                    });
+                });
+            }
+
+            renderAIAgents() {
+                const grid = document.getElementById('agentsGrid');
+                if (!grid) return;
+
+                grid.innerHTML = this.aiAgents.map(agent => `
+                    <div class="agent-card">
+                        <div class="agent-name">${agent.name}</div>
+                        <div class="agent-status status-active">${agent.status.toUpperCase()}</div>
+                        <div class="agent-description">${agent.description}</div>
+                    </div>
+                `).join('');
+            }
+
+            setupFAQ() {
+                const faqContainer = document.getElementById('faqContainer');
+                if (!faqContainer) return;
+
+                const faqData = [
+                    {
+                        question: "How are your courses different from Udemy?",
+                        answer: "Our courses are AI-curated for maximum retention, focus on cutting-edge topics like strategic intelligence and AI agents, and use addictive learning formats that traditional platforms don't offer. Plus, our self-healing system ensures optimal performance at all times."
+                    },
+                    {
+                        question: "What payment methods do you accept?",
+                        answer: "We accept South African EFT, FNB accounts, PayFast, PayShap, international payments via Stripe, and cryptocurrencies including Bitcoin, Ethereum, and USDT. All prices are updated in real-time based on current exchange rates."
+                    },
+                    {
+                        question: "How does the currency conversion work?",
+                        answer: "All prices are linked to real-time exchange rates. Our system automatically updates prices based on current market rates, which may cause slight fluctuations. You can select your preferred currency at any time."
+                    },
+                    {
+                        question: "Can I download courses for offline access?",
+                        answer: "Yes! All courses are available for instant download after payment. You can access them anytime, anywhere, even without an internet connection. Our AI system also provides personalized recommendations based on your learning progress."
+                    },
+                    {
+                        question: "Do you offer refunds?",
+                        answer: "We offer a 7-day satisfaction guarantee. If you're not happy with your course, contact our AI support assistant Bronwyn for a full refund. Our self-healing system also monitors for any issues and proactively resolves them."
+                    },
+                    {
+                        question: "What is the self-healing system?",
+                        answer: "Our self-healing system uses advanced AI to continuously monitor the platform for issues. It can automatically detect and fix problems, optimize performance, and ensure seamless user experience without manual intervention."
+                    },
+                    {
+                        question: "How do the AI agents work?",
+                        answer: "Our AI agents are autonomous systems that handle various tasks: student acquisition, content creation, social media management, strategic planning, and more. They learn and improve over time, creating a truly intelligent platform."
+                    }
+                ];
+
+                faqContainer.innerHTML = faqData.map((item, index) => `
+                    <div class="faq-item ${index === 0 ? 'active' : ''}">
+                        <div class="faq-question">
+                            ${item.question}
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            ${item.answer}
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add click handlers
+                faqContainer.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const item = question.parentElement;
+                        const isActive = item.classList.contains('active');
+                        
+                        // Close all items
+                        faqContainer.querySelectorAll('.faq-item').forEach(i => {
+                            i.classList.remove('active');
+                        });
+                        
+                        // Open clicked item if it wasn't active
+                        if (!isActive) {
+                            item.classList.add('active');
+                        }
+                    });
+                });
+            }
+
+            setupEventListeners() {
+                // Hamburger menu
+                document.getElementById('hamburger').addEventListener('click', () => {
+                    document.getElementById('nav-menu').classList.toggle('active');
+                    document.getElementById('overlay').classList.toggle('active');
+                });
+
+                // Close mobile menu when clicking on a link
+                document.querySelectorAll('#nav-menu a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        document.getElementById('nav-menu').classList.remove('active');
+                        document.getElementById('overlay').classList.remove('active');
+                    });
+                });
+
+                // Overlay click
+                document.getElementById('overlay').addEventListener('click', () => {
+                    document.getElementById('nav-menu').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                    document.getElementById('cartSidebar').classList.remove('active');
+                });
+
+                // Cart functionality
+                document.getElementById('cartIcon').addEventListener('click', () => {
+                    document.getElementById('cartSidebar').classList.add('active');
+                    document.getElementById('overlay').classList.add('active');
+                });
+
+                document.getElementById('closeCart').addEventListener('click', () => {
+                    document.getElementById('cartSidebar').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                });
+
+                // Currency selector
+                document.getElementById('currencySelect').addEventListener('change', (e) => {
+                    this.currentCurrency = e.target.value;
+                    this.renderCourses();
+                    this.updateCartUI();
+                });
+
+                // Checkout button
+                document.getElementById('checkoutBtn').addEventListener('click', () => {
+                    this.checkout();
+                });
+
+                // Dashboard button
+                document.getElementById('dashboardBtn').addEventListener('click', () => {
+                    window.location.href = '/dashboard';
+                });
+
+                // Explore courses button
+                document.getElementById('exploreCourses').addEventListener('click', () => {
+                    document.getElementById('courses').scrollIntoView({ behavior: 'smooth' });
+                });
+
+                // Auth buttons
+                document.getElementById('loginBtn').addEventListener('click', () => this.handleAuth('login'));
+                document.getElementById('signupBtn').addEventListener('click', () => this.handleAuth('signup'));
+
+                // Smooth scrolling for navigation links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+
+                // Chatbot functionality
+                this.setupChatbot();
+            }
+
+            setupChatbot() {
+                const toggle = document.getElementById('chatbotToggle');
+                const window = document.getElementById('chatbotWindow');
+                const close = document.getElementById('closeChatbot');
+                const send = document.getElementById('sendMessage');
+                const input = document.getElementById('chatbotInput');
+
+                toggle.addEventListener('click', () => {
+                    window.style.display = window.style.display === 'flex' ? 'none' : 'flex';
+                });
+
+                close.addEventListener('click', () => {
+                    window.style.display = 'none';
+                });
+
+                send.addEventListener('click', () => {
+                    this.sendChatMessage();
+                });
+
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendChatMessage();
+                    }
+                });
+            }
+
+            sendChatMessage() {
+                const input = document.getElementById('chatbotInput');
+                const message = input.value.trim();
+                
+                if (!message) return;
+
+                // Add user message to UI
+                this.addChatMessage(message, 'user');
+                
+                // Clear input
+                input.value = '';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const responses = [
+                        "I can help you with course selection, payment questions, or technical support. What would you like to know?",
+                        "Our AI agents are currently optimizing the platform. Is there anything specific you'd like to learn about?",
+                        "I notice you're interested in our courses. Would you like me to recommend something based on your interests?",
+                        "The self-healing system is active and all systems are running optimally. How can I assist you today?"
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    this.addChatMessage(randomResponse, 'bot');
+                }, 1000);
+            }
+
+            addChatMessage(message, sender) {
+                const messagesContainer = document.getElementById('chatbotMessages');
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${sender}-message`;
+                messageElement.textContent = message;
+                
+                messagesContainer.appendChild(messageElement);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            formatPrice(price, currency) {
+                if (currency === 'ZAR') {
+                    return `R ${price.toFixed(2)}`;
+                } else if (currency === 'USD' && this.exchangeRates.USD) {
+                    return `$ ${(price * this.exchangeRates.USD).toFixed(2)}`;
+                } else if (currency === 'EUR' && this.exchangeRates.EUR) {
+                    return `€ ${(price * this.exchangeRates.EUR).toFixed(2)}`;
+                } else if (currency === 'GBP' && this.exchangeRates.GBP) {
+                    return `£ ${(price * this.exchangeRates.GBP).toFixed(2)}`;
+                } else if (currency === 'BTC' && this.exchangeRates.BTC) {
+                    return `₿ ${(price * this.exchangeRates.BTC).toFixed(6)}`;
+                } else if (currency === 'ETH' && this.exchangeRates.ETH) {
+                    return `Ξ ${(price * this.exchangeRates.ETH).toFixed(6)}`;
+                } else {
+                    return `R ${price.toFixed(2)}`;
+                }
+            }
+
+            addToCart(courseId) {
+                const course = this.courses.find(c => c.id === courseId);
+                if (!course) return;
+
+                // Check if course is already in cart
+                const existingItem = this.cart.find(item => item.id === courseId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    this.cart.push({
+                        id: course.id,
+                        title: course.title,
+                        price: course.price,
+                        imageUrl: course.imageUrl,
+                        quantity: 1
+                    });
+                }
+
+                // Update cart UI
+                this.updateCartUI();
+
+                // Show feedback
+                const button = document.querySelector(`[data-course-id="${courseId}"] .add-to-cart`);
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-check"></i> Added to Cart';
+                    button.classList.add('added');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fas fa-cart-plus"></i> Add to Cart';
+                        button.classList.remove('added');
+                    }, 2000);
+                }
+
+                // Trigger self-healing system check
+                this.selfHealingCheck();
+            }
+
+            removeFromCart(courseId) {
+                this.cart = this.cart.filter(item => item.id !== courseId);
+                this.updateCartUI();
+                
+                // Trigger self-healing system check
+                this.selfHealingCheck();
+            }
+
+            updateCartUI() {
+                const cartCount = document.querySelector('.cart-count');
+                const cartItems = document.getElementById('cartItems');
+                const cartTotal = document.getElementById('cartTotal');
+
+                // Update cart count
+                if (cartCount) {
+                    cartCount.textContent = this.cart.reduce((total, item) => total + item.quantity, 0);
+                }
+
+                // Update cart items
+                if (cartItems) {
+                    if (this.cart.length === 0) {
+                        cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                    } else {
+                        cartItems.innerHTML = this.cart.map(item => `
+                            <div class="cart-item">
+                                <div class="cart-item-image" style="background-image: url('${item.imageUrl}')"></div>
+                                <div class="cart-item-details">
+                                    <div class="cart-item-title">${item.title}</div>
+                                    <div class="cart-item-price">${this.formatPrice(item.price, this.currentCurrency)} x ${item.quantity}</div>
+                                </div>
+                                <button class="remove-item" data-course-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `).join('');
+
+                        // Add event listeners to remove buttons
+                        cartItems.querySelectorAll('.remove-item').forEach(button => {
+                            button.addEventListener('click', (e) => {
+                                const courseId = parseInt(e.currentTarget.dataset.courseId);
+                                this.removeFromCart(courseId);
+                            });
+                        });
+                    }
+                }
+
+                // Update cart total
+                if (cartTotal) {
+                    const total = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    cartTotal.textContent = this.formatPrice(total, this.currentCurrency);
+                }
+            }
+
+            checkout() {
+                if (this.cart.length === 0) {
+                    alert('Your cart is empty');
+                    return;
+                }
+
+                // In production, this would redirect to checkout page
+                alert(`Proceeding to checkout with ${this.cart.length} items. Total: ${this.formatPrice(this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), this.currentCurrency)}`);
+                
+                // Simulate payment processing
+                this.processPayment();
+            }
+
+            processPayment() {
+                // Simulate payment processing
+                console.log('Processing payment...');
+                
+                // Clear cart after successful payment
+                setTimeout(() => {
+                    this.cart = [];
+                    this.updateCartUI();
+                    alert('Payment successful! Your courses are now available for download.');
+                }, 2000);
+            }
+
+            startSelfHealingSystem() {
+                // Simulate self-healing system
+                setInterval(() => {
+                    this.selfHealingCheck();
+                }, 30000); // Check every 30 seconds
+            }
+
+            selfHealingCheck() {
+                if (!this.selfHealingActive) return;
+
+                // Simulate system checks and healing
+                const issues = this.detectIssues();
+                
+                if (issues.length > 0) {
+                    console.log('Self-healing system detected issues:', issues);
+                    this.fixIssues(issues);
+                } else {
+                    console.log('Self-healing system: All systems operational');
+                }
+            }
+
+            detectIssues() {
+                const issues = [];
+                
+                // Simulate various system checks
+                if (this.cart.length > 5) {
+                    issues.push('Large cart detected - optimizing performance');
+                }
+                
+                if (this.courses.length === 0) {
+                    issues.push('No courses loaded - attempting to reload');
+                }
+                
+                if (!this.exchangeRates.USD) {
+                    issues.push('Exchange rates not loaded - retrying connection');
+                }
+                
+                // Random simulated issues
+                if (Math.random() < 0.1) { // 10% chance of simulated issue
+                    issues.push('Simulated performance issue detected');
+                }
+                
+                return issues;
+            }
+
+            fixIssues(issues) {
+                issues.forEach(issue => {
+                    console.log(`Self-healing: Fixing ${issue}`);
+                    
+                    // Simulate fixing issues
+                    if (issue.includes('courses loaded')) {
+                        this.loadCourses().then(() => {
+                            this.renderCourses();
+                        });
+                    }
+                    
+                    if (issue.includes('exchange rates')) {
+                        this.loadExchangeRates();
+                    }
+                    
+                    if (issue.includes('performance')) {
+                        // Simulate performance optimization
+                        this.optimizePerformance();
+                    }
+                });
+            }
+
+            optimizePerformance() {
+                // Simulate performance optimization
+                console.log('Self-healing: Optimizing system performance');
+                
+                // Clear any unnecessary data
+                if (this.cart.length > 10) {
+                    console.log('Self-healing: Clearing old cart data');
+                    // In a real system, you might move old cart data to storage
+                }
+            }
+
+            handleAuth(action) {
+                if (action === 'login') {
+                    window.location.href = '/login';
+                } else {
+                    window.location.href = '/signup';
+                }
+            }
+
+            checkUserSession() {
+                // Check if user is logged in (simplified)
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    // Update UI for logged in user
+                    document.getElementById('loginBtn').textContent = 'My Account';
+                    document.getElementById('signupBtn').textContent = 'Logout';
+                    
+                    document.getElementById('signupBtn').onclick = () => {
+                        localStorage.removeItem('authToken');
+                        location.reload();
+                    };
+                }
+            }
+
+            renderError(message) {
+                const grid = document.getElementById('coursesGrid');
+                if (grid) {
+                    grid.innerHTML = `
+                        <div class="error-message" style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                            <h3>😔 Unable to Load Courses</h3>
+                            <p>${message}</p>
+                            <button onclick="location.reload()" class="cta-button">Try Again</button>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            window.app = new IntelliCourseApp();
+        });
+
+        // Utility functions
+        function formatCurrency(amount, currency = 'ZAR') {
+            return new Intl.NumberFormat('en-ZA', {
+                style: 'currency',
+                currency: currency
+            }).format(amount);
+        }
+    </script>
+</body>
+</html>
