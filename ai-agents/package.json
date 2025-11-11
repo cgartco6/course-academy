@@ -1,0 +1,17 @@
+{
+  "name": "intellicourse-ai-agents",
+  "version": "1.0.0",
+  "description": "AI Agents for IntelliCourse Academy",
+  "main": "student-acquisition.py",
+  "scripts": {
+    "start": "python main.py",
+    "start-student-acquisition": "python student-acquisition.py",
+    "start-content-creation": "python content-creator.py",
+    "start-social-posting": "python social-poster.py",
+    "start-marketing-analysis": "python marketing-analyzer.py"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
